@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Dipôles réactifs et non linéaires</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #3498db; --success: #27ae60; --error: #e74c3c; --bg: #ecf0f1; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .quiz-container { background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid var(--bg); margin-bottom: 20px; padding-bottom: 10px; }
+        .partie-label { font-size: 0.85em; color: var(--accent); font-weight: bold; text-transform: uppercase; }
+        .question-text { font-size: 1.15em; color: var(--primary); margin: 20px 0; font-weight: 600; line-height: 1.4; }
+        .options-grid { display: grid; gap: 10px; }
+        button { background: white; border: 2px solid var(--bg); padding: 12px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 0.95em; transition: 0.2s; }
+        button:hover { border-color: var(--accent); background: #f7fbfe; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
+        .score-pill { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; display: inline-block; }
+        .perfect { background: var(--success); color: white; }
+        .medium { background: #f39c12; color: white; }
+        .low { background: var(--error); color: white; }
+        #score-board { display: none; }
+        .formula { font-style: italic; color: #c0392b; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="quiz-box">
+        <div class="header">
+            <div id="partie" class="partie-label"></div>
+            <div id="progress" style="color: #7f8c8d; font-size: 0.8em; margin-top: 5px;"></div>
+        </div>
+        <div id="question" class="question-text"></div>
+        <div id="options" class="options-grid"></div>
+    </div>
+
+    <div id="score-board">
+        <h2 style="text-align:center;">Aide à l'autoévaluation : Dipôles réactifs et non linéaires</h2>
+        <p style="text-align: center;">Voici votre positionnement par rapport aux notions abordées, il faut maintenant refaire les exercices pour être prêt pour le devoir.</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Notions</th>
+                    <th>Évaluation</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="skills-results"></tbody>
+        </table>
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="location.reload()" style="width: auto; padding: 10px 20px; background: var(--accent); color: white; border: none;">Relancer le quiz</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        // 1. CARACTÉRISTIQUES
+        { cat: "Caractéristique courant-tension", q: "Un dipôle est dit passif si sa caractéristique u=f(i) passe par :", options: ["L'origine (0,0)", "Le point (1,1)", "N'importe quel point de l'axe des ordonnées"], ans: 0 },
+        { cat: "Caractéristique courant-tension", q: "Laquelle de ces équations différentielles décrit un circuit RC lors de la charge ?", options: ["E = uC + RC(duC/dt)", "E = RC + duC/dt", "uC = E(1 - exp(-t/R))"], ans: 0 },
+        
+        // 2. CONDENSATEUR
+        { cat: "Condensateur idéal", q: "Quelle est l'unité de la capacité C ?", options: ["Le Henry (H)", "Le Farad (F)", "Le Coulomb (C)"], ans: 1 },
+        { cat: "Condensateur idéal", q: "Si on augmente l'épaisseur du diélectrique (e) d'un condensateur plan, la capacité C :", options: ["Augmente", "Diminue", "Reste constante"], ans: 1 },
+
+        // 3. CIRCUIT RC
+        { cat: "Circuit RC série", q: "Au bout d'une durée t = 5τ, on considère que le condensateur est :", options: ["Chargé à 63%", "Chargé à 99%", "Totalement déchargé"], ans: 1 },
+        { cat: "Circuit RC série", q: "Dans un circuit RC, si R=2kΩ et C=10µF, que vaut τ ?", options: ["20 ms", "200 ms", "2 s"], ans: 0 },
+
+        // 4. BOBINE
+        { cat: "Bobine idéale", q: "La tension aux bornes d'une bobine est proportionnelle à :", options: ["L'intensité i", "La dérivée de l'intensité di/dt", "L'intégrale de l'intensité"], ans: 1 },
+        { cat: "Bobine idéale", q: "L'énergie stockée dans une bobine est de nature :", options: ["Électrostatique", "Magnétique", "Thermique"], ans: 1 },
+
+        // 5. CIRCUIT RL
+        { cat: "Circuit RL série", q: "L'équation différentielle d'un circuit RL série sous une tension E est :", options: ["E = Ri + L(di/dt)", "E = L + R(di/dt)", "i = E/R + L(di/dt)"], ans: 0 },
+        { cat: "Circuit RL série", q: "En régime permanent, une bobine réelle (L, r) se comporte comme :", options: ["Un interrupteur ouvert", "Une simple résistance r", "Un court-circuit parfait"], ans: 1 },
+
+        // 6. CAPTEURS
+        { cat: "Capteurs", q: "Un capteur inductif de proximité détecte un objet métallique car celui-ci modifie :", options: ["La tension du secteur", "L'inductance L de la bobine", "La capacité C du montage"], ans: 1 },
+        { cat: "Capteurs", q: "Pour un capteur capacitif, la variation de la surface en regard des armatures permet de mesurer :", options: ["Un déplacement linéaire", "Une température", "Une intensité lumineuse"], ans: 0 }
+    ];
+
+    let currentIdx = 0;
+    let scores = {};
+    let totals = {};
+
+    questions.forEach(q => {
+        scores[q.cat] = 0;
+        totals[q.cat] = (totals[q.cat] || 0) + 1;
+    });
+
+    function displayQuestion() {
+        const q = questions[currentIdx];
+        document.getElementById('partie').innerText = q.cat;
+        document.getElementById('progress').innerText = `Question ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('question').innerText = q.q;
+        
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.onclick = () => {
+                if(i === q.ans) scores[q.cat]++;
+                currentIdx++;
+                if(currentIdx < questions.length) displayQuestion();
+                else showResults();
+            };
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function getLevel(s, t) {
+        const r = s / t;
+        if (r === 1) return '<span class="score-pill perfect">Maîtrisé</span>';
+        if (r >= 0.5) return '<span class="score-pill medium">Satisfaisant</span>';
+        return '<span class="score-pill low">Insuffisant</span>';
+    }
+
+    function showResults() {
+        document.getElementById('quiz-box').style.display = 'none';
+        document.getElementById('score-board').style.display = 'block';
+        const tbody = document.getElementById('skills-results');
+        
+        const items = [
+            "Caractéristique courant-tension",
+            "Condensateur idéal",
+            "Circuit RC série",
+            "Bobine idéale",
+            "Circuit RL série",
+            "Capteurs"
+        ];
+
+        items.forEach(item => {
+            if(totals[item]) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item}</td><td>${getLevel(scores[item], totals[item])}</td><td>${scores[item]}/${totals[item]}</td>`;
+                tbody.appendChild(tr);
+            }
+        });
+    }
+
+    displayQuestion();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Dynamique des fluides incompressibles</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #2980b9; --success: #27ae60; --error: #c0392b; --bg: #f8f9fa; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .quiz-container { background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid var(--bg); margin-bottom: 20px; padding-bottom: 10px; }
+        .partie-label { font-size: 0.85em; color: var(--accent); font-weight: bold; text-transform: uppercase; }
+        .question-text { font-size: 1.15em; color: var(--primary); margin: 20px 0; font-weight: 600; line-height: 1.4; }
+        .options-grid { display: grid; gap: 10px; }
+        button { background: white; border: 2px solid #ddd; padding: 12px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 0.95em; transition: 0.2s; }
+        button:hover { border-color: var(--accent); background: #f1f8ff; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
+        .score-pill { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; display: inline-block; }
+        .perfect { background: var(--success); color: white; }
+        .medium { background: #f39c12; color: white; }
+        .low { background: var(--error); color: white; }
+        #score-board { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="quiz-box">
+        <div class="header">
+            <div id="partie" class="partie-label"></div>
+            <div id="progress" style="color: #7f8c8d; font-size: 0.8em; margin-top: 5px;"></div>
+        </div>
+        <div id="question" class="question-text"></div>
+        <div id="options" class="options-grid"></div>
+    </div>
+
+    <div id="score-board">
+        <h2 style="text-align:center;">Aide à l'autoévaluation : Dynamique des fluides</h2>
+        <p style="text-align: center;">Voici votre positionnement par rapport aux notions abordées :</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Notions</th>
+                    <th>Évaluation</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="skills-results"></tbody>
+        </table>
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="location.reload()" style="width: auto; padding: 10px 20px; background: var(--accent); color: white; border: none;">Relancer le quiz</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { cat: "Débit massique et volumique", q: "Quelle est la relation entre le débit massique (qm) et le débit volumique (qv) ?", options: ["qm = qv / ρ", "qm = ρ * qv", "qv = ρ * qm"], ans: 1 },
+        { cat: "Débit massique et volumique", q: "Quelle est l'unité légale du débit volumique qv ?", options: ["L/min", "m³/s", "kg/s"], ans: 1 },
+        
+        { cat: "Vitesse moyenne d'écoulement", q: "Pour un débit qv constant, si la section S de la conduite diminue, la vitesse v :", options: ["Augmente", "Diminue", "Reste constante"], ans: 0 },
+        { cat: "Vitesse moyenne d'écoulement", q: "Quelle est la formule liant le débit volumique qv, la vitesse v et la section S ?", options: ["qv = v / S", "qv = v * S", "v = qv * S"], ans: 1 },
+
+        { cat: "Conservation du débit", q: "Dans une conduite présentant un rétrécissement, que peut-on dire du débit volumique qv entre l'entrée et la sortie ?", options: ["Il est plus grand à la sortie", "Il est plus petit à la sortie", "Il se conserve (qv1 = qv2)"], ans: 2 },
+
+        { cat: "Théorème de Bernoulli", q: "Le théorème de Bernoulli traduit la conservation de :", options: ["La masse", "L'énergie", "La pression relative"], ans: 1 },
+        { cat: "Théorème de Bernoulli", q: "Dans la relation de Bernoulli, que représente le terme 'ρgz' ?", options: ["L'énergie cinétique par unité de volume", "La pression de pesanteur (énergie potentielle)", "La pression statique"], ans: 1 },
+
+        { cat: "Effet Venturi et mesures", q: "D'après l'effet Venturi, là où la vitesse du fluide est la plus grande, la pression est :", options: ["La plus élevée", "La plus faible", "Nulle"], ans: 1 },
+        { cat: "Effet Venturi et mesures", q: "Un tube de Pitot permet de mesurer :", options: ["Le pH du fluide", "La vitesse locale du fluide", "La viscosité"], ans: 1 }
+    ];
+
+    let currentIdx = 0;
+    let scores = {};
+    let totals = {};
+
+    questions.forEach(q => {
+        scores[q.cat] = 0;
+        totals[q.cat] = (totals[q.cat] || 0) + 1;
+    });
+
+    function displayQuestion() {
+        const q = questions[currentIdx];
+        document.getElementById('partie').innerText = q.cat;
+        document.getElementById('progress').innerText = `Question ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('question').innerText = q.q;
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.onclick = () => {
+                if(i === q.ans) scores[q.cat]++;
+                currentIdx++;
+                if(currentIdx < questions.length) displayQuestion();
+                else showResults();
+            };
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function getLevel(s, t) {
+        const r = s / t;
+        if (r === 1) return '<span class="score-pill perfect">Maîtrisé</span>';
+        if (r >= 0.5) return '<span class="score-pill medium">Satisfaisant</span>';
+        return '<span class="score-pill low">Insuffisant</span>';
+    }
+
+    function showResults() {
+        document.getElementById('quiz-box').style.display = 'none';
+        document.getElementById('score-board').style.display = 'block';
+        const tbody = document.getElementById('skills-results');
+        const items = ["Débit massique et volumique", "Vitesse moyenne d'écoulement", "Conservation du débit", "Théorème de Bernoulli", "Effet Venturi et mesures"];
+
+        items.forEach(item => {
+            if(totals[item]) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item}</td><td>${getLevel(scores[item], totals[item])}</td><td>${scores[item]}/${totals[item]}</td>`;
+                tbody.appendChild(tr);
+            }
+        });
+    }
+    displayQuestion();
+</script>
+
+</body>
+</html>

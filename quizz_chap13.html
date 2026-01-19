@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz : Premier Principe et Échanges d'Énergie</title>
+    <style>
+        :root { --primary: #2c3e50; --accent: #e67e22; --success: #27ae60; --error: #c0392b; --bg: #fdfaf6; }
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; }
+        .quiz-container { background: white; width: 100%; max-width: 850px; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .header { border-bottom: 2px solid var(--bg); margin-bottom: 20px; padding-bottom: 10px; }
+        .partie-label { font-size: 0.85em; color: var(--accent); font-weight: bold; text-transform: uppercase; }
+        .question-text { font-size: 1.15em; color: var(--primary); margin: 20px 0; font-weight: 600; line-height: 1.4; }
+        .options-grid { display: grid; gap: 10px; }
+        button { background: white; border: 2px solid #ddd; padding: 12px; border-radius: 8px; cursor: pointer; text-align: left; font-size: 0.95em; transition: 0.2s; }
+        button:hover { border-color: var(--accent); background: #fef5ec; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 0.9em; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: var(--primary); color: white; }
+        .score-pill { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85em; display: inline-block; }
+        .perfect { background: var(--success); color: white; }
+        .medium { background: #f39c12; color: white; }
+        .low { background: var(--error); color: white; }
+        #score-board { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div id="quiz-box">
+        <div class="header">
+            <div id="partie" class="partie-label"></div>
+            <div id="progress" style="color: #7f8c8d; font-size: 0.8em; margin-top: 5px;"></div>
+        </div>
+        <div id="question" class="question-text"></div>
+        <div id="options" class="options-grid"></div>
+    </div>
+
+    <div id="score-board">
+        <h2 style="text-align:center;">Autoévaluation : Énergie et Transferts</h2>
+        <p style="text-align: center;">Bilan de vos connaissances :</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Notions</th>
+                    <th>Évaluation</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody id="skills-results"></tbody>
+        </table>
+        <div style="text-align: center; margin-top: 30px;">
+            <button onclick="location.reload()" style="width: auto; padding: 10px 20px; background: var(--accent); color: white; border: none;">Refaire le test</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const questions = [
+        { cat: "Premier principe", q: "Selon la convention de signe, une énergie REÇUE par le système est :", options: ["Comptée positivement (> 0)", "Comptée négativement (< 0)", "Toujours nulle"], ans: 0 },
+        { cat: "Premier principe", q: "L'énoncé du premier principe pour un système au repos est :", options: ["ΔU = W + Q", "ΔH = W + Q", "ΔU = Q - W"], ans: 0 },
+        
+        { cat: "Enthalpie", q: "L'enthalpie H est définie par la relation :", options: ["H = U - PV", "H = U + PV", "H = Q + W"], ans: 1 },
+        { cat: "Enthalpie", q: "Pour une transformation monobare (pression constante), la chaleur échangée est égale à :", options: ["La variation d'énergie interne ΔU", "La variation d'enthalpie ΔH", "Le travail W"], ans: 1 },
+
+        { cat: "Capacités thermiques", q: "Pour un gaz parfait, la variation d'énergie interne est ΔU = ", options: ["n * Cv * ΔT", "n * Cp * ΔT", "P * ΔV"], ans: 0 },
+        { cat: "Capacités thermiques", q: "Le coefficient γ (gamma) est défini par le rapport :", options: ["Cv / Cp", "Cp / Cv", "Cp - Cv"], ans: 1 },
+
+        { cat: "Lois de Joule", q: "Selon la première loi de Joule, l'énergie interne d'un gaz parfait ne dépend que de :", options: ["La pression", "Le volume", "La température"], ans: 2 }
+    ];
+
+    let currentIdx = 0;
+    let scores = {};
+    let totals = {};
+
+    questions.forEach(q => {
+        scores[q.cat] = 0;
+        totals[q.cat] = (totals[q.cat] || 0) + 1;
+    });
+
+    function displayQuestion() {
+        const q = questions[currentIdx];
+        document.getElementById('partie').innerText = q.cat;
+        document.getElementById('progress').innerText = `Question ${currentIdx + 1} / ${questions.length}`;
+        document.getElementById('question').innerText = q.q;
+        const optionsDiv = document.getElementById('options');
+        optionsDiv.innerHTML = '';
+
+        q.options.forEach((opt, i) => {
+            const btn = document.createElement('button');
+            btn.innerText = opt;
+            btn.onclick = () => {
+                if(i === q.ans) scores[q.cat]++;
+                currentIdx++;
+                if(currentIdx < questions.length) displayQuestion();
+                else showResults();
+            };
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function getLevel(s, t) {
+        const r = s / t;
+        if (r === 1) return '<span class="score-pill perfect">Maîtrisé</span>';
+        if (r >= 0.5) return '<span class="score-pill medium">Satisfaisant</span>';
+        return '<span class="score-pill low">À approfondir</span>';
+    }
+
+    function showResults() {
+        document.getElementById('quiz-box').style.display = 'none';
+        document.getElementById('score-board').style.display = 'block';
+        const tbody = document.getElementById('skills-results');
+        const items = ["Premier principe", "Enthalpie", "Capacités thermiques", "Lois de Joule"];
+
+        items.forEach(item => {
+            if(totals[item]) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${item}</td><td>${getLevel(scores[item], totals[item])}</td><td>${scores[item]}/${totals[item]}</td>`;
+                tbody.appendChild(tr);
+            }
+        });
+    }
+    displayQuestion();
+</script>
+
+</body>
+</html>
