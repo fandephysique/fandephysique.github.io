@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suivi de Compétences MM1 - Correction Accents</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
@@ -34,7 +34,7 @@
             download: true,
             delimiter: ";",
             skipEmptyLines: true,
-            encoding: "UTF-8", // Si les accents sont encore faux, essayez "ISO-8859-1"
+            encoding: "ISO-8859-1", 
             complete: function(results) {
                 const rows = results.data;
                 if (rows.length < 3) return;
@@ -71,4 +71,5 @@
     </script>
 </body>
 </html>
+
 
