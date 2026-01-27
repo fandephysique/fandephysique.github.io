@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Suivi Dynamique des Compétences</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; padding: 20px; font-size: 13px; }
+        h1 { text-align: center; color: #1a3a5a; text-transform: uppercase; border-bottom: 3px solid #1a3a5a; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 20px; }
+        th, td { border: 1px solid #cbd5e0; padding: 10px; text-align: center; }
+        th { background-color: #edf2f7; color: #2d3748; }
+        .chapitre-row { background-color: #2c3e50; color: white; text-align: left; font-weight: bold; padding: 12px; }
+        .comp-text { text-align: left; width: 35%; background-color: #f8fafc; }
+        
+        /* Couleurs automatiques */
+        .score-A { background-color: #2ecc71 !important; color: white; font-weight: bold; }
+        .score-B { background-color: #f1c40f !important; color: #333; font-weight: bold; }
+        .score-C { background-color: #e67e22 !important; color: white; font-weight: bold; }
+        .score-D { background-color: #e74c3c !important; color: white; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>Fiche de suivi de compétences</h1>
+    <div id="table-container">Chargement des données...</div>
+
+    <script>
+        // Fonction pour transformer la lettre en classe CSS
+        const getClassName = (score) => {
+            if (!score || score === '-') return '';
+            return `score-${score.trim().toUpperCase()}`;
+        };
+
+        // Lecture du fichier CSV
+        Papa.parse("competences.csv", {
+            download: true,
+            header: true,
+            complete: function(results) {
+                const data = results.data;
+                let html = '<table><thead><tr><th>Compétences</th>';
+                
+                // 1. Création des entêtes (étudiants)
+                const fields = Object.keys(data[0]);
+                for (let i = 2; i < fields.length; i++) {
+                    html += `<th>${fields[i]}</th>`;
+                }
+                html += '</tr></thead><tbody>';
+
+                // 2. Groupement par chapitre
+                let currentChapitre = "";
+                data.forEach(row => {
+                    if (!row.Compétence) return; // Ignore les lignes vides
+
+                    // Si on change de chapitre, on crée une ligne de titre
+                    if (row.Chapitre !== currentChapitre) {
+                        currentChapitre = row.Chapitre;
+                        html += `<tr><td colspan="${fields.length - 1}" class="chapitre-row">${currentChapitre}</td></tr>`;
+                    }
+
+                    // Ajout de la ligne de compétence
+                    html += `<tr><td class="comp-text">${row.Compétence}</td>`;
+                    for (let i = 2; i < fields.length; i++) {
+                        const score = row[fields[i]];
+                        html += `<td class="${getClassName(score)}">${score || '-'}</td>`;
+                    }
+                    html += '</tr>';
+                });
+
+                html += '</tbody></table>';
+                document.getElementById('table-container').innerHTML = html;
+            },
+            error: function(err) {
+                document.getElementById('table-container').innerHTML = "Erreur : Impossible de lire le fichier 'competences.csv'. Assurez-vous qu'il est bien dans le même répertoire.";
+            }
+        });
+    </script>
+</body>
+</html>
