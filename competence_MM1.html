@@ -2,72 +2,109 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suivi de Compétences MM1 - Correction Accents</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <title>Suivi de Compétences MM1</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; margin: 20px; color: #333; }
-        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #dee2e6; padding: 12px 8px; text-align: center; font-size: 13px; }
-        th { background-color: #e9ecef; font-weight: bold; }
-        .comp-text { text-align: left; width: 40%; font-weight: 500; }
-        .score-A { background-color: #2ecc71 !important; color: white; font-weight: bold; }
-        .score-B { background-color: #f1c40f !important; color: #333; font-weight: bold; }
-        .score-C { background-color: #e67e22 !important; color: white; font-weight: bold; }
-        .score-D { background-color: #e74c3c !important; color: white; font-weight: bold; }
-        .loading { text-align: center; padding: 40px; font-style: italic; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; padding: 20px; font-size: 13px; }
+        h1 { text-align: center; color: #1a3a5a; text-transform: uppercase; border-bottom: 3px solid #1a3a5a; padding-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 30px; }
+        th, td { border: 1px solid #cbd5e0; padding: 10px; text-align: center; }
+        th { background-color: #edf2f7; color: #2d3748; font-weight: bold; }
+        .chapitre-title { background-color: #2c3e50; color: #ffffff; text-align: left; padding: 12px; font-size: 1.1em; letter-spacing: 1px; }
+        .competence-label { text-align: left; width: 40%; background-color: #f8fafc; font-weight: 500; }
+        /* Couleurs des notes */
+        .A { background-color: #2ecc71 !important; color: white; font-weight: bold; }
+        .B { background-color: #f1c40f !important; color: #333; font-weight: bold; }
+        .C { background-color: #e67e22 !important; color: white; font-weight: bold; }
+        .D { background-color: #e74c3c !important; color: white; font-weight: bold; }
+        .empty { background-color: #f1f5f9; color: #94a3b8; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Fiche de suivi de compétences - MM1</h1>
-        <div id="table-output" class="loading">Chargement et traitement des caractères...</div>
-    </div>
+    <h1>Fiche de suivi de compétences - Physique-Chimie</h1>
 
-    <script>
-        const csvFileName = "suivi_competences_mm1_complete.csv";
+    <table>
+        <thead>
+            <tr>
+                <th>Compétences</th>
+                <th>DELEYROLLE Barth.</th>
+                <th>GIRAUD Olga</th>
+                <th>IMBAULT Vict.</th>
+                <th>PARDESSUS Parvine</th>
+                <th>POTTIEZ Noé</th>
+            </tr>
+        </thead>
 
-        Papa.parse(csvFileName, {
-            download: true,
-            delimiter: ";",
-            skipEmptyLines: true,
-            encoding: "UTF-8",
-            complete: function(results) {
-                const rows = results.data;
-                if (rows.length < 3) return;
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap1A_Réaction_chimique_en_solution_aqueuse</th></tr>
+            <tr><td class="competence-label">Identifier une réaction acido-basique, l'équation étant donnée.</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Exploiter la définition mathématique du pH.</td><td class="D">D</td><td class="C">C</td><td class="C">C</td><td class="A">A</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Construire et exploiter des diagrammes de prédominance.</td><td class="D">D</td><td class="B">B</td><td class="C">C</td><td class="A">A</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Mesurer le pH d'une solution aqueuse.</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="B">B</td></tr>
+        </tbody>
 
-                // Nettoyage des noms (ligne 3)
-                const headers = rows[2].map(h => h.trim()); 
-                
-                let html = '<table><thead><tr><th>Compétences</th>';
-                for (let i = 2; i < headers.length; i++) {
-                    html += `<th>${headers[i]}</th>`;
-                }
-                html += '</tr></thead><tbody>';
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap1B_oxydoréduction</th></tr>
+            <tr><td class="competence-label">Reconnaître une réaction chimique d'oxydoréduction.</td><td class="B">B</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Identifier l'oxydant, le réducteur, les couples mis en jeu.</td><td class="B">B</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Ecrire l'équation d'une réaction d'oxydoréduction.</td><td class="B">B</td><td class="B">B</td><td class="C">C</td><td class="B">B</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Utiliser la relation de Nernst pour le potentiel.</td><td class="B">B</td><td class="B">B</td><td class="C">C</td><td class="A">A</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Appliquer et exploiter la relation de Nernst fournie.</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Prévoir qualitativement le caractère favorisé ou défavorisé.</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="C">C</td></tr>
+            <tr><td class="competence-label">Identifier les conditions de corrosion d'un métal donné.</td><td class="A">A</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Reconnaître le phénomène de passivation sur un exemple.</td><td class="B">B</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Mesurer des potentiels d'électrode.</td><td class="C">C</td><td class="A">A</td><td class="B">B</td><td class="A">A</td><td class="C">C</td></tr>
+        </tbody>
 
-                for (let i = 4; i < rows.length; i++) {
-                    const row = rows[i];
-                    const competence = row[1] ? row[1].trim() : "";
-                    
-                    if (competence !== "") {
-                        html += `<tr><td class="comp-text">${competence}</td>`;
-                        for (let j = 2; j < headers.length; j++) {
-                            const note = row[j] ? row[j].trim().toUpperCase() : "";
-                            const cls = (["A","B","C","D"].includes(note)) ? `score-${note}` : "";
-                            html += `<td class="${cls}">${note}</td>`;
-                        }
-                        html += '</tr>';
-                    }
-                }
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap2_Dosages</th></tr>
+            <tr><td class="competence-label">Exploiter le résultat d'un titrage (composition).</td><td class="B">B</td><td class="C">C</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Exprimer la conductivité d'une solution (concentrations).</td><td class="B">B</td><td class="C">C</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Mettre en œuvre et exploiter une mesure de conductivité.</td><td class="B">B</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="C">C</td></tr>
+            <tr><td class="competence-label">Mettre en œuvre un protocole de dosage par étalonnage.</td><td class="B">B</td><td class="A">A</td><td class="B">B</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Mettre en œuvre un titrage par suivi pH-métrique/potentiométrique.</td><td class="C">C</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="C">C</td></tr>
+        </tbody>
 
-                html += '</tbody></table>';
-                document.getElementById('table-output').classList.remove('loading');
-                document.getElementById('table-output').innerHTML = html;
-            }
-        });
-    </script>
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap3_Radioactivité</th></tr>
+            <tr><td class="competence-label">Décrire la constitution d'un atome et d'un noyau.</td><td class="A">A</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Reconnaitre des noyaux isotopes d'un élément donné.</td><td class="D">D</td><td class="B">B</td><td class="B">B</td><td class="A">A</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Reconnaitre le type de radioactivité associé.</td><td class="C">C</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Exploiter la loi de décroissance radioactive.</td><td class="A">A</td><td class="B">B</td><td class="A">A</td><td class="B">B</td><td class="C">C</td></tr>
+        </tbody>
+
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap4_Statique_des_fluides</th></tr>
+            <tr><td class="competence-label">Définir la pression au sein d'un fluide.</td><td class="empty">-</td><td class="C">C</td><td class="C">C</td><td class="C">C</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Relier pression et force pressante.</td><td class="A">A</td><td class="D">D</td><td class="D">D</td><td class="A">A</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Distinguer pression absolue et pression relative.</td><td class="A">A</td><td class="D">D</td><td class="D">D</td><td class="D">D</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Appliquer la relation fondamentale de l'hydrostatique.</td><td class="A">A</td><td class="A">A</td><td class="C">C</td><td class="A">A</td><td class="C">C</td></tr>
+            <tr><td class="competence-label">Appliquer le principe de transmission de la pression.</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td></tr>
+            <tr><td class="competence-label">Vérifier la relation fondamentale de la statique.</td><td class="B">B</td><td class="A">A</td><td class="A">A</td><td class="A">A</td><td class="A">A</td></tr>
+        </tbody>
+
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap5_Dynamique_des_fluides_incompressibles</th></tr>
+            <tr><td class="competence-label">Distinguer les débits massique et volumique.</td><td class="A">A</td><td class="A">A</td><td class="C">C</td><td class="A">A</td><td class="B">B</td></tr>
+            <tr><td class="competence-label">Relier débit volumique et vitesse moyenne.</td><td class="A">A</td><td class="B">B</td><td class="C">C</td><td class="B">B</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Exploiter la relation de conservation du débit volumique.</td><td class="A">A</td><td class="A">A</td><td class="C">C</td><td class="B">B</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Exploiter le théorème de Bernoulli (fourni).</td><td class="A">A</td><td class="A">A</td><td class="D">D</td><td class="D">D</td><td class="D">D</td></tr>
+            <tr><td class="competence-label">Exploiter la pression différentielle (organe déprimogène).</td><td class="A">A</td><td class="D">D</td><td class="D">D</td><td class="D">D</td><td class="empty">-</td></tr>
+        </tbody>
+
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap6_Intensite-tension-puissance</th></tr>
+            <tr><td class="competence-label">Relier intensité et débit de charges / Tension et potentiel.</td><td class="A">A</td><td class="A">A</td><td class="empty">-</td><td class="B">B</td><td class="empty">-</td></tr>
+            <tr><td class="competence-label">Reconnaitre les symboles des dipôles usuels.</td><td class="A">A</td><td class="A">A</td><td class="empty">-</td><td class="A">A</td><td class="empty">-</td></tr>
+            <tr><td class="competence-label">Exploiter la loi des mailles et la loi des nœuds.</td><td class="A">A</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td></tr>
+        </tbody>
+
+        <tbody>
+            <tr><th colspan="6" class="chapitre-title">chap7_Dipole_resistif</th></tr>
+            <tr><td class="competence-label">Réaliser un circuit et mesurer des grandeurs électriques.</td><td class="A">A</td><td class="A">A</td><td class="empty">-</td><td class="B">B</td><td class="empty">-</td></tr>
+            <tr><td class="competence-label">Remplacer une association de résistances (équivalente).</td><td class="A">A</td><td class="A">A</td><td class="empty">-</td><td class="empty">-</td><td class="empty">-</td></tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
