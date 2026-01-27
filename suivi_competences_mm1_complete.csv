@@ -1,89 +1,89 @@
-MM1;Fiche de suivi de compétences;;;;;;
-;;;;;;;
-;légende:  A=Acquis,   B=A renforcer,    C=En cours d'acuisition,     D=Non acquis;Raphaël BRITO;Bartholomé DELEYROLLE;Olga GIRAUD;Victorien IMBAULT;Parvine PARDESSUS;Noé POTTIEZ
-;;;;;;;
-;Identifier  une réaction acido-basique, l’équation de réaction étant donnée.;A;A;A;A;A;A
-;Exploiter la définition mathématique du pH.;C;D;C;C;A;D
-;Construire et exploiter des diagrammes de prédominance.;C;D;B;C;A;D
-;Mesurer le pH d’une solution aqueuse.;A;A;A;A;A;B
-;Reconnaître une réaction chimique d'oxydoréduction.;D;B;B;B;A;B
-;Identifier l'oxydant, le réducteur, les couples oxydant/réducteur mis en jeu.;D;B;B;B;A;B
-;Ecrire l’équation d’une réaction d’oxydoréduction, les couples oxydant/réducteur et les demi-équations de réaction étant donnés.;D;B;B;C;B;D
-;Utiliser la relation de Nernst pour déterminer un potentiel d'oxydoréduction.;D;B;B;C;A;A
-;Appliquer et exploiter la relation de Nernst, fournie, pour le ou les couples étudiés.;D;A;A;A;A;A
-;Prévoir qualitativement le caractère favorisé ou défavorisé d’une réaction d’oxydoréduction par comparaison des potentiels d’électrode.;D;A;A;A;A;C
-;Identifier les conditions de corrosion d’un métal donné.;D;A;B;B;A;B
-;Reconnaître le phénomène de passivation sur un exemple.;D;B;B;B;A;B
-;Mesurer des potentiels d’électrode.;B;C;A;B;A;C
-;;;;;;;
-;Exploiter le résultat d’un titrage pour déterminer la composition d’une solution, l’équation de réaction étant fournie.;A;B;C;B;A;B
-;Exprimer la conductivité d’une solution de composition donnée en fonction des concentrations des entités ioniques en présence et de données tabulées dans le cas d’une solution très diluée.;D;B;C;B;A;B
-;Mettre en œuvre et exploiter une mesure de conductivité de solution aqueuse.;B;B;B;B;A;C
-;Mettre en œuvre un protocole de dosage par étalonnage (conductimétrique, spectrophotométrique…).;B;B;A;B;A;B
-;Mettre en œuvre un titrage par suivi pH-métrique, colorimétrique, potentiométrique ou conductimétrique.;B;C;A;A;A;C
-;;;;;;;
-;Décrire la constitution d’un atome. Décrire la structure d’un noyau.;A;A;B;B;A;A
-;Reconnaitre des noyaux isotopes d’un élément donné.;D;D;B;B;A;D
-;Reconnaitre le type de radioactivité associé à une réaction nucléaire fournie.;D;C;A;A;A;D
-;Exploiter la loi de décroissance radioactive.;D;A;B;A;B;C
-;;;;;;;
-;Définir la pression au sein d'un fluide et l'exprimer dans les unités usuelles.;;C;C;C;A;B
-;Relier pression et force pressante.;;A;D;D;A;D
-;Distinguer pression absolue et pression relative.;;A;D;D;D;D
-;Appliquer la relation fondamentale de l’hydrostatique pour calculer une différence de pression ou une hauteur de fluide.;;A;A;C;A;C
-;Appliquer le principe de transmission de la pression par un fluide incompressible. En citer une application.;;A;A;A;A;A
-;Vérifier la relation fondamentale de la statique des fluides.;A;B;A;A;A;A
-;;;;;;;
-;Distinguer les débits massique et volumique et exploiter la relation entre les deux.;;A;A;C;A;B
-;Relier débit volumique et vitesse moyenne d'écoulement dans une conduite de section donnée.;;A;B;C;B;D
-;Exploiter la relation de conservation du débit volumique.;;A;A;C;B;D
-;Exploiter le théorème de Bernoulli, la relation étant donnée.;;A;A;D;D;D
-;Exploiter la relation entre la pression différentielle dans un organe déprimogène et le débit volumique pour réaliser une mesure de celui-ci.;;A;A;D;D;D
-;;;;;;;
-;Relier l’intensité d’un courant au débit de charges associé. Définir la tension électrique comme une différence de potentiels.;;A;A;A;;B
-;Reconnaitre les symboles des dipôles usuels sur un schéma électrique.;;A;A;A;;A
-;Exprimer la puissance instantanée reçue ou fournie par un dipôle électrique.;;;;;;
-;Exploiter la loi des mailles et la loi des nœuds dans un circuit comportant deux mailles au maximum.;;;A;;;
-;Réaliser un circuit électrique à partir d'un schéma donné et inversement.;;B;A;A;;B
-;Proposer et mettre en œuvre un protocole pour mesurer les différentes grandeurs électriques(intensités, tensions, puissances) dans un circuit.;;B;A;A;;B
-;;;;;;;
-;Exprimer la résistance d’un conducteur ohmique filiforme en fonction de ses caractéristiques géométriques et de sa résistivité.;;;;;;
-;Justifier l’utilisation de conducteurs ohmiques dans certains capteurs.;;;;;;
-;Remplacer une association série ou parallèle de deux résistances par une résistance équivalente.;;;A;A;;
-;Exprimer la puissance dissipée dans une résistance en fonction de l’intensité ou de la tension et de la valeur de la résistance.;;;A;;;
-;Mettre en œuvre et exploiter un pont diviseur de tension.;;;;;;
-;Déterminer graphiquement le point de fonctionnement d’une diode placée dans un circuit à une maille.;;;;;;
-;Exploiter l'expression fournie de la capacité d'un condensateur plan pour expliquer le principe de fonctionnement d’un capteur capacitif.;;;;;;
-;Établir l’équation différentielle vérifiée par la tension aux bornes du condensateur et exploiter une solution donnée. Déterminer un ordre de grandeur de la durée du régime transitoire.;;;;;;
-;Exploiter l’expression fournie de l’inductance d’une bobine pour expliquer le principe de fonctionnement d’un capteur inductif.;;;;;;
-;Établir l’équation différentielle vérifiée par l’intensité du courant et exploiter une solution donnée.;;;;;;
-;Déterminer un ordre de grandeur de la durée du régime transitoire.;;;;;;
-;Réaliser et exploiter l’acquisition d’un régime transitoire pour un circuit contenant un condensateur. Étudier la charge et la décharge dans le cas d’un circuit soumis à un échelon de courant ou de tension.;;;;;;
-;Tracer et exploiter la caractéristique intensité-tension d’une diode ou d’une photodiode.;;;;;;
-;Mettre en œuvre une détection de flux lumineux à l’aide d’une photodiode.;;;;;;
-;Mettre en œuvre une diode pour redresser un signal.;;;;;;
-;;;;;;;
-;;;;;;;
-;Caractériser le référentiel choisi pour l’étude d’un mouvement.;;;;;;
-;Repérer la position d’un point par des coordonnées cartésiennes dans le référentiel choisi.;;;;;;
-;Mettre en évidence le caractère relatif du mouvement par l’analyse d’un exemple.;;;;;;
-;Relier les composantes cartésiennes des vecteurs vitesse et accélération aux lois horaires des coordonnées cartésiennes du point.;;;;;;
-;Faire un bilan de forces sur un système mécanique simple.;;;;;;
-;Identifier et caractériser une situation d'équilibre.;;;;;;
-;Analyser une séquence chronophotographique pour déterminer la vitesse et l’accélération d’un point en mouvement rectiligne.;;;;;;
-;Connaissant la valeur de l’accélération de la pesanteur et les conditions initiales du mouvement, déterminer les variations de la vitesse et de la position en fonction du temps.;;;;;;
-;Déterminer la vitesse limite en fonction des paramètres du système.;;;;;;
-;Ecrire l’équation différentielle vérifiée par la vitesse et exploiter une solution fournie, les conditions initiales étant données.;;;;;;
-;Mettre en œuvre un système mécanique instrumenté simple (position, vitesse, accélération).;;;;;;
-;Définir la vitesse angulaire de rotation et la relier à la fréquence de rotation.;;;;;;
-;Déterminer le moment d’une force en utilisant la notion de bras de levier.;;;;;;
-;Exploiter la condition d’annulation du moment résultant à l’équilibre.;;;;;;
-;Établir l’équation différentielle du mouvement. Exploiter une solution fournie.;;;;;;
-;Déterminer graphiquement un temps caractéristique d’amortissement ;;;;;;
-;Relier qualitativement la nature apériodique ou pseudo- périodique du mouvement à la comparaison du temps d’amortissement et de la période propre de l’oscillateur.;;;;;;
-;Mettre en œuvre un protocole expérimental pour enregistrer des oscillations d’un système mécanique et étudier l’effet de l’amortissement sur celles-ci.;;;;;;
-;Identifier le régime transitoire et le régime établi à partir d’un enregistrement des oscillations.;;;;;;
-;Analyser une courbe de l’amplitude des oscillations forcées en fonction de la fréquence pour déterminer la fréquence de résonance et estimer la largeur en fréquence du pic de résonance.;;;;;;
-;Mettre en œuvre un dispositif expérimental pour caractériser un système mécanique résonant.;;;;;;
-;Exploiter l’analyse spectrale d’un enregistrement pour déterminer des caractéristiques d’une oscillation libre ou forcée. Identifier, le cas échéant, les fréquences de résonance associées aux modes de vibrations.;;;;;;
-;Citer des applications du phénomène de résonance mécanique dans le cas où elle est recherchée et dans le cas où ses effets sont nuisibles au comportement d’un système.;;;;;;
+MM1;Fiche de suivi de competences;;;;;;;;;;;;
+;;;;;;;;;;;;;
+;legende:  A=Acquis,   B=A renforcer,    C=En cours d'acuisition,     D=Non acquis;Raphael BRITO;Bartholome DELEYROLLE;Olga GIRAUD;Victorien IMBAULT;Parvine PARDESSUS;Noe POTTIEZ;;;;;;
+;;;;;;;;;;;;;
+;Identifier  une reaction acido-basique, l’equation de reaction etant donnee.;A;A;A;A;A;A;;;;;;
+;Exploiter la definition mathematique du pH.;C;D;C;C;A;D;;;;;;
+;Construire et exploiter des diagrammes de predominance.;C;D;B;C;A;D;;;;;;
+;Mesurer le pH d’une solution aqueuse.;A;A;A;A;A;B;;;;;;
+;Reconnaître une reaction chimique d'oxydoreduction.;D;B;B;B;A;B;;;;;;
+;Identifier l'oxydant, le reducteur, les couples oxydant/reducteur mis en jeu.;D;B;B;B;A;B;;;;;;
+;Ecrire l’equation d’une reaction d’oxydoreduction, les couples oxydant/reducteur et les demi-equations de reaction etant donnes.;D;B;B;C;B;D;;;;;;
+;Utiliser la relation de Nernst pour determiner un potentiel d'oxydoreduction.;D;B;B;C;A;A;;;;;;
+;Appliquer et exploiter la relation de Nernst, fournie, pour le ou les couples etudies.;D;A;A;A;A;A;;;;;;
+;Prevoir qualitativement le caractere favorise ou defavorise d’une reaction d’oxydoreduction par comparaison des potentiels d’electrode.;D;A;A;A;A;C;;;;;;
+;Identifier les conditions de corrosion d’un metal donne.;D;A;B;B;A;B;;;;;;
+;Reconnaître le phenomene de passivation sur un exemple.;D;B;B;B;A;B;;;;;;
+;Mesurer des potentiels d’electrode.;B;C;A;B;A;C;;;;;;
+;;;;;;;;;;;;;
+;Exploiter le resultat d’un titrage pour determiner la composition d’une solution, l’equation de reaction etant fournie.;A;B;C;B;A;B;;;;;;
+;Exprimer la conductivite d’une solution de composition donnee en fonction des concentrations des entites ioniques en presence et de donnees tabulees dans le cas d’une solution tres diluee.;D;B;C;B;A;B;;;;;;
+;Mettre en œuvre et exploiter une mesure de conductivite de solution aqueuse.;B;B;B;B;A;C;;;;;;
+;Mettre en œuvre un protocole de dosage par etalonnage (conductimetrique, spectrophotometrique…).;B;B;A;B;A;B;;;;;;
+;Mettre en œuvre un titrage par suivi pH-metrique, colorimetrique, potentiometrique ou conductimetrique.;B;C;A;A;A;C;;;;;;
+;;;;;;;;;;;;;
+;Decrire la constitution d’un atome. Decrire la structure d’un noyau.;A;A;B;B;A;A;;;;;;
+;Reconnaitre des noyaux isotopes d’un element donne.;D;D;B;B;A;D;;;;;;
+;Reconnaitre le type de radioactivite associe à une reaction nucleaire fournie.;D;C;A;A;A;D;;;;;;
+;Exploiter la loi de decroissance radioactive.;D;A;B;A;B;C;;;;;;
+;;;;;;;;;;;;;
+;Definir la pression au sein d'un fluide et l'exprimer dans les unites usuelles.;;C;C;C;A;B;;;;;;
+;Relier pression et force pressante.;;A;D;D;A;D;;;;;;
+;Distinguer pression absolue et pression relative.;;A;D;D;D;D;;;;;;
+;Appliquer la relation fondamentale de l’hydrostatique pour calculer une difference de pression ou une hauteur de fluide.;;A;A;C;A;C;;;;;;
+;Appliquer le principe de transmission de la pression par un fluide incompressible. En citer une application.;;A;A;A;A;A;;;;;;
+;Verifier la relation fondamentale de la statique des fluides.;A;B;A;A;A;A;;;;;;
+;;;;;;;;;;;;;
+;Distinguer les debits massique et volumique et exploiter la relation entre les deux.;;A;A;C;A;B;;;;;;
+;Relier debit volumique et vitesse moyenne d'ecoulement dans une conduite de section donnee.;;A;B;C;B;D;;;;;;
+;Exploiter la relation de conservation du debit volumique.;;A;A;C;B;D;;;;;;
+;Exploiter le theoreme de Bernoulli, la relation etant donnee.;;A;A;D;D;D;;;;;;
+;Exploiter la relation entre la pression differentielle dans un organe deprimogene et le debit volumique pour realiser une mesure de celui-ci.;;A;A;D;D;D;;;;;;
+;;;;;;;;;;;;;
+;Relier l’intensite d’un courant au debit de charges associe. Definir la tension electrique comme une difference de potentiels.;;A;A;A;;B;;;;;;
+;Reconnaitre les symboles des dipôles usuels sur un schema electrique.;;A;A;A;;A;;;;;;
+;Exprimer la puissance instantanee reçue ou fournie par un dipôle electrique.;;;;;;;;;;;;
+;Exploiter la loi des mailles et la loi des nœuds dans un circuit comportant deux mailles au maximum.;;;A;;;;;;;;;
+;Realiser un circuit electrique à partir d'un schema donne et inversement.;;B;A;A;;B;;;;;;
+;Proposer et mettre en œuvre un protocole pour mesurer les differentes grandeurs electriques(intensites, tensions, puissances) dans un circuit.;;B;A;A;;B;;;;;;
+;;;;;;;;;;;;;
+;Exprimer la resistance d’un conducteur ohmique filiforme en fonction de ses caracteristiques geometriques et de sa resistivite.;;;;;;;;;;;;
+;Justifier l’utilisation de conducteurs ohmiques dans certains capteurs.;;;;;;;;;;;;
+;Remplacer une association serie ou parallele de deux resistances par une resistance equivalente.;;;A;A;;;;;;;;
+;Exprimer la puissance dissipee dans une resistance en fonction de l’intensite ou de la tension et de la valeur de la resistance.;;;A;;;;;;;;;
+;Mettre en œuvre et exploiter un pont diviseur de tension.;;;;;;;;;;;;
+;Determiner graphiquement le point de fonctionnement d’une diode placee dans un circuit à une maille.;;;;;;;;;;;;
+;Exploiter l'expression fournie de la capacite d'un condensateur plan pour expliquer le principe de fonctionnement d’un capteur capacitif.;;;;;;;;;;;;
+;etablir l’equation differentielle verifiee par la tension aux bornes du condensateur et exploiter une solution donnee. Determiner un ordre de grandeur de la duree du regime transitoire.;;;;;;;;;;;;
+;Exploiter l’expression fournie de l’inductance d’une bobine pour expliquer le principe de fonctionnement d’un capteur inductif.;;;;;;;;;;;;
+;etablir l’equation differentielle verifiee par l’intensite du courant et exploiter une solution donnee.;;;;;;;;;;;;
+;Determiner un ordre de grandeur de la duree du regime transitoire.;;;;;;;;;;;;
+;Realiser et exploiter l’acquisition d’un regime transitoire pour un circuit contenant un condensateur. etudier la charge et la decharge dans le cas d’un circuit soumis à un echelon de courant ou de tension.;;;;;;;;;;;;
+;Tracer et exploiter la caracteristique intensite-tension d’une diode ou d’une photodiode.;;;;;;;;;;;;
+;Mettre en œuvre une detection de flux lumineux à l’aide d’une photodiode.;;;;;;;;;;;;
+;Mettre en œuvre une diode pour redresser un signal.;;;;;;;;;;;;
+;;;;;;;;;;;;;
+;;;;;;;;;;;;;
+;Caracteriser le referentiel choisi pour l’etude d’un mouvement.;;;;;;;;;;;;
+;Reperer la position d’un point par des coordonnees cartesiennes dans le referentiel choisi.;;;;;;;;;;;;
+;Mettre en evidence le caractere relatif du mouvement par l’analyse d’un exemple.;;;;;;;;;;;;
+;Relier les composantes cartesiennes des vecteurs vitesse et acceleration aux lois horaires des coordonnees cartesiennes du point.;;;;;;;;;;;;
+;Faire un bilan de forces sur un systeme mecanique simple.;;;;;;;;;;;;
+;Identifier et caracteriser une situation d'equilibre.;;;;;;;;;;;;
+;Analyser une sequence chronophotographique pour determiner la vitesse et l’acceleration d’un point en mouvement rectiligne.;;;;;;;;;;;;
+;Connaissant la valeur de l’acceleration de la pesanteur et les conditions initiales du mouvement, determiner les variations de la vitesse et de la position en fonction du temps.;;;;;;;;;;;;
+;Determiner la vitesse limite en fonction des parametres du systeme.;;;;;;;;;;;;
+;Ecrire l’equation differentielle verifiee par la vitesse et exploiter une solution fournie, les conditions initiales etant donnees.;;;;;;;;;;;;
+;Mettre en œuvre un systeme mecanique instrumente simple (position, vitesse, acceleration).;;;;;;;;;;;;
+;Definir la vitesse angulaire de rotation et la relier à la frequence de rotation.;;;;;;;;;;;;
+;Determiner le moment d’une force en utilisant la notion de bras de levier.;;;;;;;;;;;;
+;Exploiter la condition d’annulation du moment resultant à l’equilibre.;;;;;;;;;;;;
+;etablir l’equation differentielle du mouvement. Exploiter une solution fournie.;;;;;;;;;;;;
+;Determiner graphiquement un temps caracteristique d’amortissement ;;;;;;;;;;;;
+;Relier qualitativement la nature aperiodique ou pseudo- periodique du mouvement à la comparaison du temps d’amortissement et de la periode propre de l’oscillateur.;;;;;;;;;;;;
+;Mettre en œuvre un protocole experimental pour enregistrer des oscillations d’un systeme mecanique et etudier l’effet de l’amortissement sur celles-ci.;;;;;;;;;;;;
+;Identifier le regime transitoire et le regime etabli à partir d’un enregistrement des oscillations.;;;;;;;;;;;;
+;Analyser une courbe de l’amplitude des oscillations forcees en fonction de la frequence pour determiner la frequence de resonance et estimer la largeur en frequence du pic de resonance.;;;;;;;;;;;;
+;Mettre en œuvre un dispositif experimental pour caracteriser un systeme mecanique resonant.;;;;;;;;;;;;
+;Exploiter l’analyse spectrale d’un enregistrement pour determiner des caracteristiques d’une oscillation libre ou forcee. Identifier, le cas echeant, les frequences de resonance associees aux modes de vibrations.;;;;;;;;;;;;
+;Citer des applications du phenomene de resonance mecanique dans le cas où elle est recherchee et dans le cas où ses effets sont nuisibles au comportement d’un systeme.;;;;;;;;;;;;
