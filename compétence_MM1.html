@@ -2,76 +2,96 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Suivi Dynamique des Compétences</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Suivi de Compétences MM1 - Dynamique</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     <style>
-        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f0f2f5; padding: 20px; font-size: 13px; }
-        h1 { text-align: center; color: #1a3a5a; text-transform: uppercase; border-bottom: 3px solid #1a3a5a; padding-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; background: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 20px; }
-        th, td { border: 1px solid #cbd5e0; padding: 10px; text-align: center; }
-        th { background-color: #edf2f7; color: #2d3748; }
-        .chapitre-row { background-color: #2c3e50; color: white; text-align: left; font-weight: bold; padding: 12px; }
-        .comp-text { text-align: left; width: 35%; background-color: #f8fafc; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f9; margin: 20px; color: #333; }
+        h1 { text-align: center; color: #2c3e50; border-bottom: 2px solid #2c3e50; padding-bottom: 10px; }
         
-        /* Couleurs automatiques */
+        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #dee2e6; padding: 12px 8px; text-align: center; font-size: 13px; }
+        th { background-color: #e9ecef; font-weight: bold; position: sticky; top: 0; }
+        
+        .comp-text { text-align: left; width: 40%; font-weight: 500; }
+        
+        /* Styles des scores */
         .score-A { background-color: #2ecc71 !important; color: white; font-weight: bold; }
         .score-B { background-color: #f1c40f !important; color: #333; font-weight: bold; }
         .score-C { background-color: #e67e22 !important; color: white; font-weight: bold; }
         .score-D { background-color: #e74c3c !important; color: white; font-weight: bold; }
+        
+        .loading { text-align: center; padding: 40px; font-style: italic; color: #7f8c8d; }
     </style>
 </head>
 <body>
 
-    <h1>Fiche de suivi de compétences</h1>
-    <div id="table-container">Chargement des données...</div>
+    <div class="container">
+        <h1>Fiche de suivi de compétences - MM1</h1>
+        <div id="table-output" class="loading">Chargement des données du fichier CSV...</div>
+    </div>
 
     <script>
-        // Fonction pour transformer la lettre en classe CSS
-        const getClassName = (score) => {
-            if (!score || score === '-') return '';
-            return `score-${score.trim().toUpperCase()}`;
-        };
+        const csvFileName = "suivi_competences_mm1_complete.csv";
 
-        // Lecture du fichier CSV
-        Papa.parse("competences.csv", {
+        function getScoreClass(val) {
+            if (!val) return "";
+            const cleanVal = val.trim().toUpperCase();
+            if (["A", "B", "C", "D"].includes(cleanVal)) {
+                return `score-${cleanVal}`;
+            }
+            return "";
+        }
+
+        Papa.parse(csvFileName, {
             download: true,
-            header: true,
+            delimiter: ";", // Force le séparateur point-virgule
+            skipEmptyLines: true,
             complete: function(results) {
-                const data = results.data;
-                let html = '<table><thead><tr><th>Compétences</th>';
+                const rows = results.data;
+                if (rows.length < 3) {
+                    document.getElementById('table-output').innerHTML = "Le fichier CSV semble vide ou mal formé.";
+                    return;
+                }
+
+                // Récupération des noms des étudiants (ligne 3 du CSV, index 2)
+                const headers = rows[2]; 
                 
-                // 1. Création des entêtes (étudiants)
-                const fields = Object.keys(data[0]);
-                for (let i = 2; i < fields.length; i++) {
-                    html += `<th>${fields[i]}</th>`;
+                let html = '<table><thead><tr>';
+                html += `<th>Compétences</th>`;
+                for (let i = 2; i < headers.length; i++) {
+                    html += `<th>${headers[i]}</th>`;
                 }
                 html += '</tr></thead><tbody>';
 
-                // 2. Groupement par chapitre
-                let currentChapitre = "";
-                data.forEach(row => {
-                    if (!row.Compétence) return; // Ignore les lignes vides
-
-                    // Si on change de chapitre, on crée une ligne de titre
-                    if (row.Chapitre !== currentChapitre) {
-                        currentChapitre = row.Chapitre;
-                        html += `<tr><td colspan="${fields.length - 1}" class="chapitre-row">${currentChapitre}</td></tr>`;
+                // Parcours des compétences (à partir de la ligne 5, index 4)
+                for (let i = 4; i < rows.length; i++) {
+                    const row = rows[i];
+                    const competence = row[1];
+                    
+                    // On n'affiche la ligne que si une compétence est présente
+                    if (competence && competence.trim() !== "") {
+                        html += `<tr><td class="comp-text">${competence}</td>`;
+                        
+                        // Colonnes des notes
+                        for (let j = 2; j < headers.length; j++) {
+                            const note = row[j] ? row[j].trim() : "";
+                            html += `<td class="${getScoreClass(note)}">${note}</td>`;
+                        }
+                        html += '</tr>';
                     }
-
-                    // Ajout de la ligne de compétence
-                    html += `<tr><td class="comp-text">${row.Compétence}</td>`;
-                    for (let i = 2; i < fields.length; i++) {
-                        const score = row[fields[i]];
-                        html += `<td class="${getClassName(score)}">${score || '-'}</td>`;
-                    }
-                    html += '</tr>';
-                });
+                }
 
                 html += '</tbody></table>';
-                document.getElementById('table-container').innerHTML = html;
+                document.getElementById('table-output').classList.remove('loading');
+                document.getElementById('table-output').innerHTML = html;
             },
-            error: function(err) {
-                document.getElementById('table-container').innerHTML = "Erreur : Impossible de lire le fichier 'competences.csv'. Assurez-vous qu'il est bien dans le même répertoire.";
+            error: function() {
+                document.getElementById('table-output').innerHTML = 
+                    `<p style="color:red;">Erreur : Impossible de trouver le fichier <strong>${csvFileName}</strong>.<br>
+                    Vérifiez qu'il est bien dans le même dossier que ce fichier HTML.</p>`;
             }
         });
     </script>
