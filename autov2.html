@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speed Math</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary: #3b82f6;
+            --secondary: #8b5cf6;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --success: #10b981;
+            --error: #f43f5e;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+            width: 95%;
+            max-width: 700px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+        }
+
+        h1 {
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 2.5rem;
+            margin: 0 0 1rem 0;
+        }
+
+        #timer-bar {
+            width: 100%;
+            height: 12px;
+            background: #334155;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        #timer-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+        }
+
+        .question-box {
+            font-size: 1.4rem;
+            min-height: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .math-formula {
+            display: block;
+            margin-top: 1rem; 
+            font-size: 2.5rem;
+            color: #fff;
+        }
+
+        #feedback {
+            height: 30px;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+            transition: all 0.3s;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        button {
+            padding: 1rem;
+            font-size: 1.1rem;
+            border: none;
+            border-radius: 1rem;
+            background: #334155;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid rgba(255,255,255,0.05);
+            min-height: 75px;
+        }
+
+        button:hover:not(:disabled) {
+            background: #475569;
+            transform: translateY(-2px);
+        }
+
+        button:disabled { cursor: default; }
+
+        .correct { background: var(--success) !important; box-shadow: 0 0 20px var(--success); }
+        .wrong { background: var(--error) !important; animation: shake 0.4s; }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .score-board { margin-top: 2rem; font-weight: 500; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Speed Math</h1>
+    <div id="timer-bar"><div id="timer-fill"></div></div>
+    
+    <div id="feedback"></div>
+
+    <div class="question-box" id="question">Chargement...</div>
+
+    <div class="options-grid" id="options"></div>
+
+    <div class="score-board">
+        Score : <span id="score" style="color:white">0</span> | 
+        Record : <span id="highscore" style="color:white">0</span>
+    </div>
+</div>
+
+<script>
+    const questionsPool = [
+        { c: "Dérivée de :", q: "\\(3x\\)", a: "\\(3\\)", o: ["\\(3x^2\\)", "\\(3\\)", "\\(0\\)", "\\(x\\)"] },
+        { c: "Dérivée de :", q: "\\(x^2\\)", a: "\\(2x\\)", o: ["\\(x\\)", "\\(2x\\)", "\\(2\\)", "\\(x^3\\)"] },
+        { c: "Dérivée de :", q: "\\(5x^2\\)", a: "\\(10x\\)", o: ["\\(5x\\)", "\\(10x\\)", "\\(25x\\)", "\\(10\\)"] },
+        { c: "Dérivée de :", q: "\\(x^3\\)", a: "\\(3x^2\\)", o: ["\\(3x^2\\)", "\\(2x^3\\)", "\\(3x\\)", "\\(x^2\\)"] },
+        { c: "Dérivée de :", q: "\\(\\frac{1}{x}\\)", a: "\\(-\\frac{1}{x^2}\\)", o: ["\\(\\ln(x)\\)", "\\(-\\frac{1}{x^2}\\)", "\\(\\frac{1}{x^2}\\)", "\\(-1\\)"] },
+        { c: "Dérivée de :", q: "\\(e^{2x}\\)", a: "\\(2e^{2x}\\)", o: ["\\(e^{2x}\\)", "\\(2e^{2x}\\)", "\\(\\frac{1}{2}e^{2x}\\)", "\\(2x e^{2x}\\)"] },
+        { c: "Dérivée de :", q: "\\(\\cos(2x)\\)", a: "\\(-2\\sin(2x)\\)", o: ["\\(2\\sin(2x)\\)", "\\(-2\\sin(2x)\\)", "\\(-\\sin(2x)\\)", "\\(-2\\cos(2x)\\)"] },
+        { c: "Primitive de :", q: "\\(x\\)", a: "\\(\\frac{x^2}{2}\\)", o: ["\\(1\\)", "\\(\\frac{x^2}{2}\\)", "\\(x^2\\)", "\\(2x\\)"] },
+        { c: "Primitive de :", q: "\\(e^x\\)", a: "\\(e^x\\)", o: ["\\(e^x\\)", "\\(xe^x\\)", "\\(\\ln(x)\\)", "\\(e^{x+1}\\)"] },
+        { c: "Primitive de :", q: "\\(\\frac{1}{x}\\)", a: "\\(\\ln|x|\\)", o: ["\\(e^x\\)", "\\(\\ln|x|\\)", "\\(-\\frac{1}{x^2}\\)", "\\(1\\)"] },
+        { c: "Dérivée de :", q: "\\(u \\cdot v\\)", a: "\\(u'v + uv'\\)", o: ["\\(u'v'\\)", "\\(u'v + uv'\\)", "\\(u' + v'\\)", "\\(uv' - u'v\\)"] },
+        { c: "Dérivée de :", q: "\\(\\ln(u)\\)", a: "\\(\\frac{u'}{u}\\)", o: ["\\(\\frac{1}{u}\\)", "\\(\\frac{u'}{u}\\)", "\\(u'\\ln(u)\\)", "\\(e^u\\)"] }
+    ];
+
+    let availableQuestions = [];
+    let currentScore = 0;
+    let highscore = 0;
+    let timer;
+    const TIME_LIMIT = 10000; // 10 secondes
+
+    const feedbackMsgs = {
+        success: ["Bravo !", "Exact !", "Parfait !", "Super !", "Maîtrisé !"],
+        error: ["Oups !", "Pas tout à fait...", "Réessaie !", "Perdu !"]
+    };
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function nextQuestion() {
+        clearInterval(timer);
+        document.getElementById('feedback').innerText = "";
+        
+        // Gestion du pool de questions aléatoires
+        if (availableQuestions.length === 0) {
+            availableQuestions = shuffle([...questionsPool]);
+        }
+        
+        const qData = availableQuestions.pop();
+        const qEl = document.getElementById('question');
+        const optEl = document.getElementById('options');
+        
+        qEl.innerHTML = `<span>${qData.c}</span><span class="math-formula">${qData.q}</span>`;
+        optEl.innerHTML = '';
+        
+        shuffle([...qData.o]).forEach(opt => {
+            const btn = document.createElement('button');
+            btn.innerHTML = opt;
+            btn.onclick = () => checkAnswer(opt, qData.a, btn);
+            optEl.appendChild(btn);
+        });
+
+        if (window.MathJax) MathJax.typesetPromise();
+        startTimer();
+    }
+
+    function startTimer() {
+        let timeLeft = TIME_LIMIT;
+        const fill = document.getElementById('timer-fill');
+        timer = setInterval(() => {
+            timeLeft -= 50;
+            fill.style.width = (timeLeft / TIME_LIMIT * 100) + '%';
+            if (timeLeft <= 0) {
+                gameOver("Temps écoulé !");
+            }
+        }, 50);
+    }
+
+    function checkAnswer(selected, correct, btn) {
+        clearInterval(timer);
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(b => b.disabled = true);
+
+        const feedbackEl = document.getElementById('feedback');
+
+        if (selected === correct) {
+            btn.classList.add('correct');
+            feedbackEl.innerText = feedbackMsgs.success[Math.floor(Math.random() * feedbackMsgs.success.length)];
+            feedbackEl.style.color = "var(--success)";
+            currentScore++;
+            document.getElementById('score').innerText = currentScore;
+            setTimeout(nextQuestion, 1000);
+        } else {
+            btn.classList.add('wrong');
+            feedbackEl.innerText = feedbackMsgs.error[Math.floor(Math.random() * feedbackMsgs.error.length)];
+            feedbackEl.style.color = "var(--error)";
+            buttons.forEach(b => {
+                if(b.innerHTML === correct) b.classList.add('correct');
+            });
+            setTimeout(() => gameOver("Mauvaise réponse !"), 1500);
+        }
+    }
+
+    function gameOver(msg) {
+        if (currentScore > highscore) highscore = currentScore;
+        document.getElementById('highscore').innerText = highscore;
+        alert(msg + "\nScore : " + currentScore);
+        currentScore = 0;
+        document.getElementById('score').innerText = 0;
+        availableQuestions = []; // Reset pool
+        nextQuestion();
+    }
+
+    window.onload = nextQuestion;
+</script>
+
+</body>
+</html>
